@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import { moviesList } from "./data";
 import ModalExample from "./component/Add";
 import Rate from "./component/Rate";
+import { Route, Switch } from "react-router-dom";
+import Description from "./component/Description";
 
 function App() {
   const [movies, setMovieList] = useState(moviesList);
@@ -15,11 +17,9 @@ function App() {
   };
   return (
     <div className="App">
-      
       <Navbar className="bg-light justify-content-between">
-      
         <Form inline>
-        <ModalExample addMovie={addMovie} />
+          <ModalExample addMovie={addMovie} />
           <FormControl
             type="text"
             placeholder="Search"
@@ -29,12 +29,19 @@ function App() {
           <Rate setSearchRate={setSearchRate} rating={searchRate} />
         </Form>
       </Navbar>
-      
-      <MovieList
-        searchTitle={searchTitle}
-        movieList={movies}
-        searchRate={searchRate}
-      />
+
+      <Switch>
+        <Route exact path="/">
+          {" "}
+          <MovieList
+            searchTitle={searchTitle}
+            movieList={movies}
+            searchRate={searchRate}
+          />
+        </Route>
+
+        <Route path="/Description" component={Description} />
+      </Switch>
     </div>
   );
 }
